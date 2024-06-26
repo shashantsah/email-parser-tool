@@ -66,7 +66,7 @@ const sendAutomatedResponse = async (recipient, category) => {
       response = "We would be happy to provide more information. What specific details are you looking for?";
       break;
     default:
-      response = category;
+      response = "Thank you";
       break;
   }
 

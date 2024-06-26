@@ -33,35 +33,43 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-async function analyzeContent(content) {
-  //  console.log(content);
-   const result = await model.generateContent(`find 10 key words from this mail : ${content}`);
-
-  const response = await result.response;
-  const text = response.text();
-
-  console.log(text);
-  return text;
-}
-
-
 // async function analyzeContent(content) {
-//   const result =await model.generateContent(`I am using gemini api to automate the mail reply so just reply to this : ${content}  Don't write anything extra because this mail is  begin sent to people directly and reply in brief`);
-
+//   //  console.log(content);
+//    const result = await model.generateContent(`find 10 key words from this mail : ${content}`);
 
 //   const response = await result.response;
 //   const text = response.text();
 
-//   // if (text.includes("Interested")) {
-//   //   return "Interested";
-//   // } else if (text.includes("Not Interested")) {
-//   //   return "Not Interested";
-//   // } else {
-//   //   return "More Information";
-//   // }
 //   console.log(text);
 //   return text;
 // }
+
+
+async function analyzeContent(content) {
+  
+const result = await model.generateContent(`read the following email content and just reply in the following words "Interested","Not Interested","More Information","Something Else" ${content} `);
+
+const response = await result.response;
+const text = response.text().trim(); // Trim whitespace
+
+// Define regex patterns for each category
+const interestedRegex = /\b(?:Interested)\b/i;
+const notInterestedRegex = /\b(?:Not Interested)\b/i;
+const moreInfoRegex = /\b(?:More Information)\b/i;
+
+// Test each regex pattern against the text
+// if (interestedRegex.test(text)) {
+//   return "Interested";
+// } else if (notInterestedRegex.test(text)) {
+//   return "Not Interested";
+// } else if (moreInfoRegex.test(text)) {
+//   return "More Information";
+// } else {
+//   return "Something Else";
+// }
+// console.log(text);
+  return text;
+}
 
 module.exports = { analyzeContent };
 

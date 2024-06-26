@@ -44,10 +44,10 @@ const processEmails = async () => {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     for (const email of gmailEmails) {
-      await delay(10000);
+      await delay(1000);
       const category = await analyzeContent(email.content);
-      // await sendAutomatedResponse(email.sender, category);
-       await markEmailAsRead(email.id, accessToken, refreshToken);
+      await sendAutomatedResponse(email.sender, category);
+      await markEmailAsRead(email.id, accessToken, refreshToken);
      
     }
 

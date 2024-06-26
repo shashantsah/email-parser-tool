@@ -14,7 +14,7 @@ const handleEmails = async (req, res) => {
     for (const email of gmailEmails) {
       const category = await analyzeContent(email.content);
       await sendAutomatedResponse(email.sender, category);
-      console.log(`Sent automated response to ${email.sender}, email ID: ${responseInfo.emailId}, response: ${responseInfo.responseMessage}`);
+      console.log(`Sent automated response to ${email.sender}`);
     }
 
     res.status(200).send('Emails processed successfully');
